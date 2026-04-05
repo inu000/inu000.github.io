@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PaintIO</title>
+    <style>
+        /* Полный минимализм в стиле 7-zip.org */
+        body {
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            line-height: 1.5;
+            color: #000000;
+            background-color: #ffffff;
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0 10px 0;
+        }
+        
+        h2 {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 25px 0 10px 0;
+            border-bottom: 1px solid #cccccc;
+            padding-bottom: 5px;
+        }
+        
+        h3 {
+            font-size: 14px;
+            font-weight: bold;
+            margin: 15px 0 5px 0;
+        }
+        
+        a {
+            color: #0000ee;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Меню */
+        .menu {
+            margin: 20px 0;
+            padding: 10px 0;
+            border-top: 1px solid #cccccc;
+            border-bottom: 1px solid #cccccc;
+        }
+        
+        .menu a {
+            margin-right: 20px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+        
+        /* Разделы */
+        .section {
+            margin: 30px 0;
+        }
+        
+        /* Списки */
+        ul, ol {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+        
+        li {
+            margin: 3px 0;
+        }
+        
+        /* Блок скачивания */
+        .download-block {
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .download-link {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        /* Текст лицензии */
+        .license-text {
+            font-family: monospace;
+            white-space: pre-wrap;
+            background-color: #f8f8f8;
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            margin: 15px 0;
+            line-height: 1.6;
+        }
+        
+        /* Известные проблемы */
+        .issues {
+            background-color: #f8f8f8;
+            border: 1px solid #e0e0e0;
+            padding: 10px 15px;
+            margin: 15px 0;
+        }
+        
+        /* Системные требования */
+        .requirements {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border: 1px solid #e0e0e0;
+        }
+        
+        /* Список скриншотов */
+        .screenshot-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .screenshot-list li {
+            margin: 8px 0;
+            padding: 3px 0;
+            border-bottom: 1px dotted #e0e0e0;
+        }
+        
+        .screenshot-list li:before {
+            content: "📷 ";
+            color: #666666;
+        }
+        
+        /* Футер */
+        .footer {
+            margin-top: 40px;
+            padding-top: 10px;
+            border-top: 1px solid #cccccc;
+            font-size: 11px;
+            text-align: center;
+            color: #666666;
+        }
+        
+        /* Кнопка наверх */
+        .back-to-top {
+            text-align: right;
+            margin: 10px 0;
+            font-size: 11px;
+        }
+        
+        /* Для мобильных */
+        @media screen and (max-width: 600px) {
+            body {
+                padding: 0 15px;
+            }
+            
+            .menu a {
+                display: inline-block;
+                margin: 5px 15px 5px 0;
+            }
+            
+            .screenshot-list li:before {
+                content: "• ";
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <h1 id="top">PaintIO 1.0</h1>
+    
+    <!-- Меню с якорями -->
+    <div class="menu">
+        <a href="#top">Главная</a>
+        <a href="#download">Скачать</a>
+        <a href="#screenshots">Функций программы</a>
+        <a href="#license">Лицензия</a>
+    </div>
+    
+    <!-- Раздел "Главная" -->
+    <div class="section" id="main">
+        <h2>Простой графический редактор</h2>
+        
+        <p><strong>PaintIO</strong> — это легкий и интуитивно понятный графический редактор, созданный для быстрого рисования и редактирования изображений. Программа представляет собой современную интерпретацию классического Microsoft Paint с добавлением полезных функций, но сохраняет простоту и удобство оригинала.</p>
+        
+        <h3>Основные возможности:</h3>
+        <ul>
+            <li>Все классические инструменты рисования: карандаш, кисть, ластик, заливка</li>
+            <li>Поддержка слоев для профессиональной работы с изображениями</li>
+            <li>Прозрачность и альфа-канал (сохранение в PNG)</li>
+            <li>Фигуры: прямоугольник, овал, линия, многоугольник</li>
+            <li>Инструмент "Текст" с выбором шрифта</li>
+            <li>Выделение прямоугольное и свободное</li>
+            <li>История действий (отмена/повтор, Ctrl+Z/Ctrl+Y)</li>
+            <li>Масштабирование, поворот и отражение изображения</li>
+            <li>Палитра из 28 основных цветов + выбор произвольного</li>
+            <li>Пипетка для выбора цвета с холста</li>
+            <li>Сохранение в PNG, JPG, BMP</li>
+        </ul>
+        
+        <p>PaintIO идеально подходит для создания простых рисунков, редактирования скриншотов, добавления аннотаций к изображениям, а также для обучения основам работы с графическими редакторами.</p>
+        
+        <div class="back-to-top">
+            <a href="#top">↑ наверх</a>
+        </div>
+    </div>
+    
+    <!-- Раздел "Скачать" -->
+    <div class="section" id="download">
+        <h2>Скачать PaintIO 1.0</h2>
+        
+        <div class="download-block">
+            <p><a href="https://archive.org/download/paint-io/PaintIO%20setup.exe" class="download-link">Скачать PaintIO 1.0 для Windows</a> (исполняемый файл, ~27 MB)</p>
+            <p style="margin-top: 5px; color: #666666;">Прямая ссылка без ожидания и регистрации</p>
+        </div>
+        
+        <h3>Системные требования</h3>
+        <div class="requirements">
+            <ul style="margin: 5px 0;">
+                <li>Операционная система: Windows 7, 8, 10, 11 (64-bit или 32-bit)</li>
+                <li>Процессор: 1 GHz или быстрее</li>
+                <li>Оперативная память: 512 МБ (рекомендуется 1 ГБ)</li>
+                <li>Свободное место на диске: 100 МБ</li>
+                <li>Видеокарта: любая с поддержкой OpenGL 2.0</li>
+            </ul>
+        </div>
+        
+        <p>Программа не требует установки дополнительных компонентов и готова к работе сразу после скачивания.</p>
+        
+        <div class="back-to-top">
+            <a href="#top">↑ наверх</a>
+        </div>
+    </div>
+    
+    <!-- Раздел "Скриншоты" (текстовый список) -->
+    <div class="section" id="screenshots">
+        <h2>Функций программы</h2>
+        
+        <p>Ниже представлен список доступных скриншотов программы (изображения не загружены для экономии трафика):</p>
+        
+        <ul class="screenshot-list">
+            <li><strong>Главное окно</strong> — интерфейс программы в стиле классического Paint</li>
+            <li><strong>Инструменты рисования</strong> — панель с карандашом, кистью, ластиком, заливкой</li>
+            <li><strong>Палитра цветов</strong> — 28 основных цветов и выбор произвольного цвета</li>
+            <li><strong>Работа со слоями</strong> — панель слоёв с возможностью добавлять/удалять слои</li>
+            <li><strong>Фигуры</strong> — рисование прямоугольников, овалов, линий, многоугольников</li>
+            <li><strong>Текст</strong> — добавление надписей с выбором шрифта и размера</li>
+            <li><strong>Выделение</strong> — прямоугольное и свободное выделение областей</li>
+            <li><strong>Прозрачность</strong> — пример работы с прозрачным фоном и альфа-каналом</li>
+        </ul>
+        
+        <p></p>
+        
+        <div class="back-to-top">
+            <a href="#top">↑ наверх</a>
+        </div>
+    </div>
+    
+    <!-- Раздел "Лицензия" -->
+    <div class="section" id="license">
+        <h2>Лицензионное соглашение</h2>
+        
+        <div class="license-text">
+PaintIO версия 1.0
+Автор: Автор PaintIO
+
+Программа предоставляется "как есть", без каких-либо гарантий.
+Автор не несёт ответственности за любые последствия использования программы.
+Используя программу, вы принимаете все риски на себя.
+        </div>
+        
+        <h3>Известные проблемы версии 1.0:</h3>
+        <div class="issues">
+            <ul style="margin: 5px 0;">
+                <li>При использовании инструмента "Заливка" вызывает проблему вылета программы</li>
+                <li>Инструмент "Текст" вызывает проблему вылета программы</li>
+				<li>Инструмент "Многоугольник" вызывает проблему нерабочего состояния</li>
+				<li>Инструмент "Выделение" вызывает проблему вылета программы</li>
+                <li>Возможны редкие вылеты при быстром переключении инструментов</li>
+                <li>При работе с очень большими изображениями (более 5000x5000) возможно замедление</li>
+            </ul>
+        </div>
+        
+        <h3>Условия распространения</h3>
+        <p>Программа может свободно распространяться при условии сохранения данного лицензионного соглашения. Вы можете свободно копировать программу, передавать её другим пользователям, размещать на файлообменниках и дисках.</p>
+        
+        <p>Запрещается модифицировать программу и распространять изменённые версии без явного разрешения автора.</p>
+        
+        <div class="back-to-top">
+            <a href="#top">↑ наверх</a>
+        </div>
+    </div>
+    
+    <!-- Футер -->
+    <div class="footer">
+        <p>© 2026 Автор PaintIO. PaintIO распространяется под свободной лицензией.</p>
+        <p>
+            <a href="#top">Главная</a> | 
+            <a href="#download">Скачать</a> | 
+            <a href="#screenshots">Функций программы</a> | 
+            <a href="#license">Лицензия</a>
+        </p>
+        <p style="margin-top: 5px; font-size: 10px;">PaintIO 1.0 — простой графический редактор для Windows</p>
+    </div>
+
+</body>
+</html>
