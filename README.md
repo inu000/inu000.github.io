@@ -1,0 +1,1 @@
+# inu000.github.io
