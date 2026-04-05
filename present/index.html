@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Крестики-нолики | Tic-Tac-Toe</title>
+    <style>
+        /* Минималистичный классический стиль */
+        body {
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #000000;
+            background-color: #ffffff;
+            margin: 20px auto;
+            max-width: 500px;
+            padding: 0 20px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0 10px 0;
+        }
+        
+        hr {
+            border: none;
+            border-top: 1px solid #cccccc;
+            margin: 20px 0;
+        }
+        
+        /* Игровое поле */
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            background-color: #000000;
+            border: 2px solid #000000;
+            margin: 20px auto;
+            width: 300px;
+            height: 300px;
+        }
+        
+        .cell {
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .cell:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .cell.disabled {
+            cursor: not-allowed;
+        }
+        
+        /* Информационная панель */
+        .info {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .status {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        button {
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 8px 20px;
+            background-color: #f0f0f0;
+            border: 1px solid #a0a0a0;
+            cursor: pointer;
+            margin: 5px;
+        }
+        
+        button:hover {
+            background-color: #e0e0e0;
+        }
+        
+        /* Счёт */
+        .score {
+            display: flex;
+            justify-content: space-around;
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .score-item {
+            font-size: 16px;
+        }
+        
+        .score-value {
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        /* Футер */
+        .footer {
+            margin-top: 30px;
+            padding-top: 10px;
+            border-top: 1px solid #cccccc;
+            font-size: 11px;
+            text-align: center;
+            color: #666666;
+        }
+        
+        /* Для мобильных */
+        @media screen and (max-width: 500px) {
+            .board {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .cell {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Крестики-нолики</h1>
+    <p>Классическая игра для двух игроков. По очереди ставьте X и O.</p>
+    
+    <hr>
+    
+    <!-- Игровое поле -->
+    <div class="board" id="board">
+        <div class="cell" data-index="0"></div>
+        <div class="cell" data-index="1"></div>
+        <div class="cell" data-index="2"></div>
+        <div class="cell" data-index="3"></div>
+        <div class="cell" data-index="4"></div>
+        <div class="cell" data-index="5"></div>
+        <div class="cell" data-index="6"></div>
+        <div class="cell" data-index="7"></div>
+        <div class="cell" data-index="8"></div>
+    </div>
+    
+    <!-- Информация -->
+    <div class="info">
+        <div class="status" id="status">Ход: X</div>
+        <div>
+            <button id="resetBtn">Новая игра</button>
+            <button id="resetScoreBtn">Сбросить счёт</button>
+        </div>
+    </div>
+    
+    <!-- Счёт -->
+    <div class="score">
+        <div class="score-item">
+            <div>X (Первый)</div>
+            <div class="score-value" id="scoreX">0</div>
+        </div>
+        <div class="score-item">
+            <div>O (Второй)</div>
+            <div class="score-value" id="scoreO">0</div>
+        </div>
+        <div class="score-item">
+            <div>Ничьи</div>
+            <div class="score-value" id="scoreDraw">0</div>
+        </div>
+    </div>
+    
+    <!-- Футер -->
+    <div class="footer">
+        <p>Крестики-нолики — игра для двух игроков<br>
+        Первый ход всегда за X</p>
+        <p>© 2025</p>
+    </div>
+
+    <script>
+        // Игровое состояние
+        let board = ['', '', '', '', '', '', '', '', ''];
+        let currentPlayer = 'X';
+        let gameActive = true;
+        
+        // Счёт
+        let scoreX = 0;
+        let scoreO = 0;
+        let scoreDraw = 0;
+        
+        // DOM элементы
+        const boardElement = document.getElementById('board');
+        const statusElement = document.getElementById('status');
+        const resetBtn = document.getElementById('resetBtn');
+        const resetScoreBtn = document.getElementById('resetScoreBtn');
+        const scoreXElement = document.getElementById('scoreX');
+        const scoreOElement = document.getElementById('scoreO');
+        const scoreDrawElement = document.getElementById('scoreDraw');
+        
+        // Выигрышные комбинации
+        const winPatterns = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], // горизонтали
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], // вертикали
+            [0, 4, 8], [2, 4, 6]              // диагонали
+        ];
+        
+        // Обновление отображения поля
+        function updateBoard() {
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach((cell, index) => {
+                cell.textContent = board[index];
+            });
+        }
+        
+        // Проверка победителя
+        function checkWinner() {
+            for (let pattern of winPatterns) {
+                const [a, b, c] = pattern;
+                if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+                    return board[a];
+                }
+            }
+            return null;
+        }
+        
+        // Проверка на ничью
+        function isDraw() {
+            return board.every(cell => cell !== '');
+        }
+        
+        // Обновление счёта
+        function updateScoreDisplay() {
+            scoreXElement.textContent = scoreX;
+            scoreOElement.textContent = scoreO;
+            scoreDrawElement.textContent = scoreDraw;
+        }
+        
+        // Конец игры
+        function endGame(winner) {
+            gameActive = false;
+            
+            if (winner === 'X') {
+                scoreX++;
+                statusElement.textContent = 'Победитель: X! 🎉';
+            } else if (winner === 'O') {
+                scoreO++;
+                statusElement.textContent = 'Победитель: O! 🎉';
+            } else {
+                scoreDraw++;
+                statusElement.textContent = 'Ничья! 🤝';
+            }
+            
+            updateScoreDisplay();
+        }
+        
+        // Обработка хода
+        function handleMove(index) {
+            if (!gameActive || board[index] !== '') {
+                return;
+            }
+            
+            // Делаем ход
+            board[index] = currentPlayer;
+            updateBoard();
+            
+            // Проверяем победителя
+            const winner = checkWinner();
+            
+            if (winner) {
+                endGame(winner);
+                return;
+            }
+            
+            // Проверяем ничью
+            if (isDraw()) {
+                endGame(null);
+                return;
+            }
+            
+            // Меняем игрока
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            statusElement.textContent = `Ход: ${currentPlayer}`;
+        }
+        
+        // Сброс игры (без сброса счёта)
+        function resetGame() {
+            board = ['', '', '', '', '', '', '', '', ''];
+            currentPlayer = 'X';
+            gameActive = true;
+            statusElement.textContent = 'Ход: X';
+            updateBoard();
+        }
+        
+        // Полный сброс (счёт тоже)
+        function resetFull() {
+            resetGame();
+            scoreX = 0;
+            scoreO = 0;
+            scoreDraw = 0;
+            updateScoreDisplay();
+        }
+        
+        // Обработчик клика по ячейке
+        function onCellClick(event) {
+            const cell = event.target;
+            const index = parseInt(cell.getAttribute('data-index'));
+            
+            if (!isNaN(index)) {
+                handleMove(index);
+            }
+        }
+        
+        // Создание игрового поля
+        function createBoard() {
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach(cell => {
+                cell.removeEventListener('click', onCellClick);
+                cell.addEventListener('click', onCellClick);
+            });
+        }
+        
+        // Инициализация
+        function init() {
+            createBoard();
+            resetGame();
+            
+            resetBtn.addEventListener('click', resetGame);
+            resetScoreBtn.addEventListener('click', resetFull);
+        }
+        
+        // Запуск
+        init();
+    </script>
+</body>
+</html>
